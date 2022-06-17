@@ -6,13 +6,7 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
-class UserCreationForm(UserCreationForm):
-    email = forms.EmailField(
-        label=_("Email"),
-        max_length=254,
-        widget=forms.EmailInput(attrs={'autocomplete': 'email'})
-    )
-
+class UserCreation(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "email")
+        fields = ("phone_number", "password")
