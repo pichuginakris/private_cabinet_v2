@@ -1,7 +1,40 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
+
+
+class UserManager(BaseUserManager):
+    def create_user(self, phone_number, password=None, is_admin=True, is_staff=False,
+                    is_active=True, **extra_fields):
+        if not phone_number:
+            raise ValueError("User must have a phone_number")
+        if not password:
+            raise ValueError("User must have a password")
+        user = self.model(
+            phone_number=phone_number
+        )
+        user.set_password(password)  # change password to hash
+        user.admin = is_admin
+        user.staff = is_staff
+        user.active = is_active
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, phone_number,  password=None, **extra_fields):
+        if not phone_number:
+            raise ValueError("User must have a phone number")
+        if not password:
+            raise ValueError("User must have a password")
+        user = self.model(
+            phone_number=phone_number
+        )
+        user.set_password(password)
+        user.admin = True
+        user.staff = True
+        user.active = True
+        user.save(using=self._db)
+        return user
 
 
 class User(AbstractUser):
@@ -11,6 +44,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField('Номер телефона', unique=True, null=False, blank=False)
     password = models.CharField('Пароль', max_length=100)
     USERNAME_FIELD = 'phone_number'
+    objects = UserManager()
 
     def __str__(self):
         return str(self.phone_number)
