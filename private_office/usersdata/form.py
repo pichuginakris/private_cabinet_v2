@@ -9,4 +9,5 @@ User = get_user_model()
 class UserCreation(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("phone_number", "password")
+        fields = ("phone_number", "password1", "password2")
+        exclude = ['password']

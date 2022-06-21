@@ -15,7 +15,8 @@
 <body class="main_register_page">
 <li class="list-group-item">
         User: {{ user }}
-    </li>
+</li>
+
 <div class="register_form">
 <div class="register_form_sub">
 
@@ -46,8 +47,12 @@
             <span class="id_password1">
                 Повторите пароль *
             </span>
-                {{ form.password2}}
+                {{ form.password2 }}
         </div>
+
+        {% for error in form.errors %}
+          <p style="color: red">{{ form.errors }}</p>
+        {% endfor %}
         {% csrf_token %}
     <button type="submit" class="btn btn-success">Зарегистрироваться</button>
     </form>
