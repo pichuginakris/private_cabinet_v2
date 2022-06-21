@@ -5,8 +5,7 @@ import datetime
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, phone_number, password=None, is_admin=True, is_staff=False,
-                    is_active=True, **extra_fields):
+    def create_user(self, phone_number, password=None, **extra_fields):
         if not phone_number:
             raise ValueError("User must have a phone_number")
         if not password:
@@ -15,9 +14,9 @@ class UserManager(BaseUserManager):
             phone_number=phone_number
         )
         user.set_password(password)  # change password to hash
-        user.admin = is_admin
-        user.staff = is_staff
-        user.active = is_active
+        user.is_staff = False
+        user.is_active = True
+        user.is_superuser = False
         user.save(using=self._db)
         return user
 
@@ -30,9 +29,9 @@ class UserManager(BaseUserManager):
             phone_number=phone_number
         )
         user.set_password(password)
-        user.admin = True
-        user.staff = True
-        user.active = True
+        user.is_staff = True
+        user.is_active = True
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
