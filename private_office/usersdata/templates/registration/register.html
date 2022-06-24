@@ -15,7 +15,9 @@
 <body class="main_register_page">
 <li class="list-group-item">
         User: {{ user }}
-</li>
+    </li>
+
+
 
 <div class="register_form">
 <div class="register_form_sub">
@@ -31,32 +33,116 @@
         ВАШИ ДАННЫЕ
     </p>
     <form action="{% url 'register' %}" method="post">
-        <div class="password1">
-            <span class="id_password1">
+        <div class="phone_number">
+            <span class="phone_number">
                 Телефон *
             </span>
                 {{ form.phone_number }}
         </div>
+
+        {% if form.phone_number.errors %}
+            <style >
+                .phone_number{
+                    background-color: #ffe6e0;
+                    }
+                input#id_phone_number{
+                    background-color: #ffe6e0;
+                    }
+            </style>
+        {% for error in form.phone_number.errors %}
+        <p class="wrong">{{ error|escape }} </p>
+    {% endfor %}
+
+        {% else %}
+            <style >
+                .phone_number{
+                    background-color: rgba(245,244,246,1);}
+                input#id_phone_number{
+                    background-color: rgba(245,244,246,1);
+                    }
+            </style>
+         {% endif %}
         <div class="password1">
             <span class="id_password1">
                 Пароль *
             </span>
                 {{ form.password1 }}
         </div>
-        <div class="password1">
-            <span class="id_password1">
+         {% if form.password2.errors %}
+            <style >
+                .password1{
+                    background-color: #ffe6e0;
+                    }
+                input#id_password1{
+                    background-color: #ffe6e0;
+                    }
+            </style>
+
+         {% else %}
+            <style >
+                .password1{
+                    background-color: rgba(245,244,246,1);}
+                input#id_password1{
+                    background-color: rgba(245,244,246,1);
+                    }
+            </style>
+          <p class="help_text">
+                * {{ form.password1.help_text  }}
+            </p>
+         {% endif %}
+
+        <div class="password2">
+            <span class="id_password2">
                 Повторите пароль *
             </span>
                 {{ form.password2 }}
         </div>
 
-        {% for error in form.errors %}
-          <p style="color: red">{{ form.errors }}</p>
-        {% endfor %}
+            {% if form.password2.errors %}
+             <style >
+                .password2{
+                    background-color: #ffe6e0;
+                    }
+                input#id_password2{
+                    background-color: #ffe6e0;
+                    }
+            </style>
+           {% for error in form.password2.errors %}
+        <p class="wrong">{{ error|escape }} </p>
+    {% endfor %}
+         {% else %}
+            <style >
+                .password2{
+                    background-color: rgba(245,244,246,1);}
+                input#id_password2{
+                    background-color: rgba(245,244,246,1);
+                    }
+            </style>
+         <p class="help_text">
+            * {{ form.password2.help_text  }}
+        </p>
+         {% endif %}
+
+        <p class="do_you_have_account">
+            У вас уже есть аккаунт?&nbsp;
+            <a class="do_you_have_account" href="/users/login">
+                Войти
+            </a>
+        </p>
+        <div class="licence">
+            <input type="checkbox" name="licence" />
+            Принимаю условия
+            <a class="licence" href="/">
+                “Пользовательского соглашения”
+            </a>
+        </div>
         {% csrf_token %}
-    <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+    <button type="submit" class="register_button">
+        Зарегистрироваться
+    </button>
     </form>
 </div>
     </div>
+
 </body>
 </html>

@@ -26,6 +26,7 @@ class Register(View):
             return redirect('home')
         else:
             print(form.errors)
+            print(form.error_messages)
         context = {
             'form': form
         }
