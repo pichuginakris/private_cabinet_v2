@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-
-from usersdata.form import UserCreation, UserAuthorisation
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.views import LoginView
+from .form import UserCreation, UserAuthorisation
 
 
 class Register(View):
@@ -46,15 +47,14 @@ class Login(View):
         form = UserAuthorisation(request.POST)
 
         if form.is_valid():
-            form.save()
             phone_number = form.cleaned_data.get('phone_number')
             password = form.cleaned_data.get('password')
-            user = form.save()
+            user = authenticate(request, phone_number=phone_number, password=password)
             login(request, user)
             return redirect('home')
         else:
             print(form.errors)
-            print(form.error_messages)
+
         context = {
             'form': form
         }

@@ -28,6 +28,7 @@
     <p class="your_data">
         ВАШИ ДАННЫЕ
     </p>
+    {{ form.errors }}
     <form action="{% url 'login' %}" method="post">
         <div class="phone_number">
             <span class="phone_number">
