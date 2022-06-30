@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 User = get_user_model()
 
@@ -24,14 +25,31 @@ class UserAuthorisation(forms.Form):
     class Meta:
         model = User
         fields = ('phone_number', 'password')
+
+    error_messages = {
+        'invalid_login': _(
+            "Пожалуйста, введите корректный номер телефона и пароль."
+        ),
+        'inactive': _("Аккаунт не активен. Пожалуйста, авторизуйтесь"),
+    }
     phone_number = forms.CharField(
-                                     widget=forms.NumberInput(attrs={'minlength': 10, 'maxlength': 15, 'required': True, 'type': 'number'}))
+        widget=forms.NumberInput(attrs={'minlength': 10, 'maxlength': 15, 'required': True,
+                                        'type': 'tel', 'autocomplete': 'on'}))
     password = forms.CharField(
         label=_("Password"),
         widget=forms.PasswordInput(attrs={'autocomplete': 'on'}),
         strip=False,
         help_text=_("Enter the password."),
     )
+
+    def get_invalid_login_error(self):
+        return ValidationError(
+
+
+            self.error_messages['invalid_login'],
+            code='invalid_login',
+            params={'username': self.username_field.verbose_name},
+        )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -47,11 +65,13 @@ class UserAuthorisation(forms.Form):
         user = authenticate(phone_number=phone_number, password=password)
 
         if not user:
-            qs = User.objects.filter(email=phone_number)
+            qs = User.objects.filter(phone_number=phone_number)
             if not qs.exists():
-                raise forms.ValidationError('Email or Phone number not found.')
+                raise forms.ValidationError(self.error_messages['invalid_login'],
+                                            code='invalid_login' )
             else:
-                raise forms.ValidationError('Sorry, password is wrong.')
+                raise forms.ValidationError(self.error_messages['invalid_login'],
+                                            code='invalid_login')
         else:
             return data
 
@@ -61,4 +81,7 @@ class UserAuthorisation(forms.Form):
         password = data.get('password')
         user = authenticate(phone_number=phone_number, password=password)
         return user
+
+    def get_user(self):
+        return self.user_cache
 

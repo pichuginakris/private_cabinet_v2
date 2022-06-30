@@ -28,7 +28,7 @@
     <p class="your_data">
         ВАШИ ДАННЫЕ
     </p>
-    {{ form.errors }}
+
     <form action="{% url 'login' %}" method="post">
         <div class="phone_number">
             <span class="phone_number">
@@ -37,7 +37,7 @@
                 <input type="tel" id="id_phone_number" maxlength="128" autofocus required name="phone_number" />
         </div>
 
-        {% if form.phone_number.errors %}
+        {% if form.errors %}
             <style >
                 .phone_number{
                     background-color: #ffe6e0;
@@ -46,9 +46,9 @@
                     background-color: #ffe6e0;
                     }
             </style>
-        {% for error in form.phone_number.errors %}
-        <p class="wrong">{{ error|escape }} </p>
-    {% endfor %}
+
+        <p class="wrong"> {{ form.error_messages.invalid_login }} </p>
+
 
         {% else %}
             <style >
@@ -65,26 +65,7 @@
             </span>
                 {{ form.password }}
         </div>
-         {% if form.password.errors %}
-            <style >
-                .password1{
-                    background-color: #ffe6e0;
-                    }
-                input#id_password1{
-                    background-color: #ffe6e0;
-                    }
-            </style>
 
-         {% else %}
-            <style >
-                .password1{
-                    background-color: rgba(245,244,246,1);}
-                input#id_password1{
-                    background-color: rgba(245,244,246,1);
-                    }
-            </style>
-
-         {% endif %}
         <p class="do_you_have_account">
             Забыли пароль?&nbsp;
             <a class="do_you_have_account" href="/users/login">
