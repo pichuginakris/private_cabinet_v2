@@ -4,6 +4,6 @@ from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='registration/home.html'), name='home'),
+    path('', TemplateView.as_view(template_name='registration/profile.html'), name='home'),
     path('users/', include('usersdata.urls')),
 ]
