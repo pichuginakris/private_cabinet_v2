@@ -95,7 +95,7 @@ border-radius: 5px;
                     </div>
                 </div>
                 <div style="display:flex;margin-left: 30px; margin-bottom: 10px;">
-                    <div class="username" style="background: #F5F4F6;margin-right: 20px;
+                    <div class="username" style="background: #F5F4F6;margin-right: 20px;width: 32%;
 border-radius: 7px;">
                          <span class="phone_number">
                             Имя *
@@ -109,7 +109,7 @@ border-radius: 7px;">
                         </p>
                     </div>
 
-                    <div class="email" style="background: #F5F4F6;margin-right: 20px;
+                    <div class="email" style="background: #F5F4F6;margin-right: 20px;width: 32%;
 border-radius: 7px;">
                          <span class="phone_number">
                             Контактный телефон *
@@ -123,7 +123,7 @@ border-radius: 7px;">
                         </p>
 
                     </div>
-                    <div class="email" style="background: #F5F4F6;margin-right: 20px;
+                    <div class="email" style="background: #F5F4F6;margin-right: 20px;width: 32%;
 border-radius: 7px;">
                          <span class="phone_number">
                             Почта *
@@ -143,9 +143,66 @@ border-radius: 7px;">
                 <div>
                      <p style="font-family: 'Roboto';font-style: normal;font-weight: 600;font-size: 16px;line-height: 19px;color: #000000;    margin-top: 30px;margin-left: 30px;">
                         Категория
+
+
+
                     </p>
+                    <select style="    background: #F5F4F6;font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 18px;
+
+align-items: center;
+
+color: #000000;
+
+    margin-left: 30px;
+    border-radius: 7px;
+    border: none;
+    width: 96%;
+    height: 50px;
+    margin-bottom: 10px;">
+
+                         {% for category_name in category_names %}
+                        <option> {{ category_name }} </option>
+                        {% endfor %}
+                    </select>
                 </div>
+                <div style="    margin-top: 35px;
+    display: flex;
+    justify-content: space-between; ">
+                <button class="s" style="    background: rgba(0, 173, 240, 0.1);margin-left: 30px;margin-bottom:20px;
+    border-radius: 7px;
+    border: none;
+    width: 20%;
+    height: 50px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    /* display: flex; */
+    /* align-items: center; */
+    text-align: center;
+    color: #00ADF0;">Сменить пароль</button>
+                <button class="s" style="    background: rgba(255, 61, 0, 0.1);
+border-radius: 7px;margin-right: 30px;margin-bottom:20px;
+
+    border: none;
+    width: 10%;
+    height: 50px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 18px;
+    /* display: flex; */
+    /* align-items: center; */
+    text-align: center;
+    color: #FF3D00;">Выйти</button>
             </div>
+                </div>
 
 
 

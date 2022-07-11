@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from .form import UserCreation, UserAuthorisation
+from .db_connection import choose_category
 
 
 class Register(View):
@@ -64,3 +65,9 @@ class Login(View):
 
 def index(request):
     return render(request, 'usersdata/registration.html')
+
+
+def profile(request):
+    category_names = choose_category()
+    data = {"category_names": category_names}
+    return render(request, 'registration/profile.html', context=data)

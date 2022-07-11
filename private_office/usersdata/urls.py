@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('ex/', views.index),
+    path('profile/', views.profile),
     path('logout/', django_views.LogoutView.as_view(), name='logout'),
 
     path('password_change/', django_views.PasswordChangeView.as_view(), name='password_change'),

@@ -47,3 +47,9 @@ class User(AbstractUser):
 
     def __str__(self):
         return str(self.phone_number)
+
+
+class Category(models.Model):
+    phone_number = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=300)
+    slug = models.CharField(max_length=300)
