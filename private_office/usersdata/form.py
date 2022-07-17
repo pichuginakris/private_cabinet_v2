@@ -1,10 +1,18 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
 User = get_user_model()
+
+
+class UpdateProfileForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput())
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "phone_number")
 
 
 class UserCreation(UserCreationForm):
@@ -44,8 +52,6 @@ class UserAuthorisation(forms.Form):
 
     def get_invalid_login_error(self):
         return ValidationError(
-
-
             self.error_messages['invalid_login'],
             code='invalid_login',
             params={'username': self.username_field.verbose_name},
