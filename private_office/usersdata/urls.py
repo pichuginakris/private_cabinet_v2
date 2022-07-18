@@ -9,7 +9,9 @@ urlpatterns = [
     path('change/', views.profile_change),
     path('logout/', django_views.LogoutView.as_view(), name='logout'),
 
-    path('password_change/', django_views.PasswordChangeView.as_view(), name='password_change'),
+    #path('password_change/', django_views.PasswordChangeView.as_view(), name='password_change'),
+    #path('password-reset/', views.ChangePassword.as_view(), name='password-reset'),
+    path('password_change/', views.password_change),
     path('password_change/done/', django_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
 
     path('password_reset/', django_views.PasswordResetView.as_view(), name='password_reset'),

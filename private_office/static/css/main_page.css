@@ -238,6 +238,42 @@ input#id_password2 {
   opacity: 1;
   text-align: left;
 }
+input#id_old_password {
+  background: rgba(245,244,246,1);
+  margin-left: 10px;
+  border: none;
+  width: 354px;
+  color: rgba(0,0,0,1);
+  font-family: Roboto;
+  font-weight: Regular;
+  font-size: 15px;
+  opacity: 1;
+  text-align: left;
+}
+input#id_new_password1 {
+  background: rgba(245,244,246,1);
+  margin-left: 10px;
+  border: none;
+  width: 354px;
+  color: rgba(0,0,0,1);
+  font-family: Roboto;
+  font-weight: Regular;
+  font-size: 15px;
+  opacity: 1;
+  text-align: left;
+}
+input#id_new_password2 {
+  background: rgba(245,244,246,1);
+  margin-left: 10px;
+  border: none;
+  width: 354px;
+  color: rgba(0,0,0,1);
+  font-family: Roboto;
+  font-weight: Regular;
+  font-size: 15px;
+  opacity: 1;
+  text-align: left;
+}
 p.do_you_have_account{
     font-family: 'Roboto';
     font-style: normal;

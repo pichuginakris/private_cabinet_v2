@@ -1,12 +1,15 @@
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.views import LoginView, LogoutView
-from .form import UserCreation, UserAuthorisation, UpdateProfileForm
+from .form import UserCreation, UserAuthorisation, UpdateProfileForm, PasswordChange
 from .db_connection import choose_category
 from django.contrib.auth.decorators import login_required
 from .models import User
+from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import update_session_auth_hash
 
 
 class Register(View):
@@ -65,6 +68,19 @@ class Login(View):
         return render(request, self.template_name, context)
 
 
+def password_change(request):
+    if request.method == 'POST':
+        change_form = PasswordChangeForm(request.user, request.POST)
+        if change_form.is_valid():
+            user = change_form.save()
+            update_session_auth_hash(request, user)
+            data = {"change_form": change_form}
+    else:
+        change_form = PasswordChangeForm(request.user)
+        data = {"change_form": change_form}
+    return render(request, 'registration/password_change.html', context=data)
+
+
 def index(request):
     return render(request, 'usersdata/registration.html')
 
@@ -97,3 +113,5 @@ def profile_change(request):
         profile_form = UpdateProfileForm(instance=request.user)
     data = {"category_names": category_names, 'profile_form': profile_form}
     return render(request, 'registration/profile_change.html', context=data)
+
+

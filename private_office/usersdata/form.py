@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model, authenticate
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
@@ -74,7 +74,7 @@ class UserAuthorisation(forms.Form):
             qs = User.objects.filter(phone_number=phone_number)
             if not qs.exists():
                 raise forms.ValidationError(self.error_messages['invalid_login'],
-                                            code='invalid_login' )
+                                            code='invalid_login')
             else:
                 raise forms.ValidationError(self.error_messages['invalid_login'],
                                             code='invalid_login')
@@ -91,3 +91,8 @@ class UserAuthorisation(forms.Form):
     def get_user(self):
         return self.user_cache
 
+
+class PasswordChange(PasswordChangeForm):
+    class Meta:
+        model = User
+        fields = ('old_password', 'new_password1', 'new_password2')
